@@ -1,18 +1,17 @@
 package com.klu;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-@RestController
-@RequestMapping("/products")
-public class ProductController {
+@Component
+public class RepoImple implements CommandLineRunner {
 
     @Autowired
     private ProductRepository repo;
 
-    @PostMapping("/add")
-    public String addProducts() {
+    @Override
+    public void run(String... args) {
 
         repo.save(new Product(null,"Laptop","Electronics",65000,5));
         repo.save(new Product(null,"Mouse","Electronics",500,20));
@@ -20,11 +19,7 @@ public class ProductController {
         repo.save(new Product(null,"Chair","Furniture",3000,7));
         repo.save(new Product(null,"Pen","Stationery",20,100));
 
-        return "Products Added Successfully";
-    }
-
-    @GetMapping("/sort")
-    public List<Product> sortByPrice() {
-        return repo.sortPriceAsc();
+        System.out.println(repo.sortPriceAsc());
+        
     }
 }
